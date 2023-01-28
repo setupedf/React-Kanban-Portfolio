@@ -1,0 +1,12 @@
+.App-header {
+    display: flex;
+    justify-content: center;
+}
+
+.App-header-title {
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 67px;
+    color: #131313;
+    padding: 54px 0 23px 0;
+}
