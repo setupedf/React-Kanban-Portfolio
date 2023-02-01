@@ -18,3 +18,11 @@ svg {
     height: 100%;
 }
 
+button,
+input {
+    font-family: 'Inter', sans-serif;
+    background: none;
+    outline: none;
+    border: none;
+}
+

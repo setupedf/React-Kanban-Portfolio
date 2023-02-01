@@ -6,7 +6,7 @@
 }
 
 .App-main-column {
-    background: #EDEDED;
+    background: #fefefe;
     border-radius: 8px;
 }
 
@@ -14,6 +14,7 @@
 .App-main-column-title {
     background: #EDEDED;
     padding: 16px;
+    border-radius: 8px 8px 0 0;
 }
 
 .App-main-column-title-icon {
@@ -21,10 +22,10 @@
 }
 
 .App-main-column-body {
-    height: 100%;
+    /* height: 100%; */
     background: #FFFFFF;
     border: 1px solid #EDEDED;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
     padding: 16px 32px;
 }
 
@@ -58,13 +59,17 @@
 
 .App-main-column-body-item-main-icon {
     align-self: center;
-    margin-right: 15px;
+    min-width: 18px;
+    min-height: 18px;
 }
 
 .App-main-column-body-item-main-text {
+    max-width: 240px;
+    padding-left: 15px;
     font-weight: 700;
     font-size: 18px;
     line-height: 24px;
+    word-break: break-word;
 }
 
 .App-main-column-body-item-main-footer {
@@ -72,6 +77,5 @@
     font-size: 12px;
     line-height: 17px;
     margin-top: 16px;
+    word-break: break-word;
 }
-
-

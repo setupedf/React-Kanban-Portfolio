@@ -63,22 +63,25 @@ let columnIndexes = {
   'column-2': 2
 }
 
+let initIdCount = 3 
+
 function App() {
 
-  // Making a state copy of the array
-  let [data, updateData] = useState(initData)
-
+  // Making the controlled items
+  const [data, updateData] = useState(initData)
+  const [idCount, updateIdCount] = useState(initIdCount)
+  const [text, updateText] = useState("")
+  const [footer, updateFooter] = useState("")
+  
   function onDragEnd(info) {
-
-    // console.log(info)
     
     // Copying the data array
     let newData = Array.from(data)
-
+    
     // Getting the reordered task
     let sourceColumn = newData[columnIndexes[info.source.droppableId]]
     let targetColumn = newData[columnIndexes[info.destination.droppableId]]
-
+    
     const [reorderedTask] = sourceColumn.tasks.splice(info.source.index, 1)
     
     // Inserting the task
@@ -87,9 +90,38 @@ function App() {
     // Updating the array
     updateData(newData)
   }
+  
+  const textHandler = (e) => {
+    updateText(e.target.value)
+  }
+  
+  const footerHandler = (e) => {
+    updateFooter(e.target.value)
+  }
+  
+  function onSubmit(e) {
+    
+    // Prevent default behaviour - page reload
+    e.preventDefault()
 
-  function onDragStart(info) {
-    console.log(info)
+    // Copying the existing data array
+    let targetTasksList = data[0].tasks
+    
+    let inputFields = e.target.querySelectorAll('input')
+    
+    // Pushing a new task in the list
+    targetTasksList.push({
+      id: idCount + 1,
+      text: `${inputFields[0].value}`,
+      footer: `${inputFields[1].value}`
+    })
+    
+    // Updating the id count
+    updateIdCount(idCount + 1)
+
+    // Deleting previous values
+    updateText("")
+    updateFooter("")
   }
   
   return (
@@ -103,7 +135,7 @@ function App() {
 
           {/* Declaring Dnd-able part of the site and passing
               a function required when a draging ends*/}
-          <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <DragDropContext onDragEnd={onDragEnd}>
               {
 
                 // Mapping over all columns in the data list
@@ -122,9 +154,19 @@ function App() {
                 })
               }
           </DragDropContext>
-
-
         </main>
+
+        <div className="App-footer">
+          <form onSubmit={onSubmit} action="" className="App-footer-form">
+            <input value={text} onChange={textHandler} className='App-footer-form-input' type="text" placeholder='Type task text' required/>
+            <input value={footer} onChange={footerHandler} className='App-footer-form-input' type="text" placeholder='Type task footer' required/>
+
+            <button className="App-footer-form-btn" type="submit">
+              <span className="App-footer-form-btn-text">Create new task</span>
+              <span className="App-footer-form-btn-emoji">👆</span>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
