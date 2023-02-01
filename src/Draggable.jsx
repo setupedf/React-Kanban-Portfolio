@@ -12,9 +12,12 @@ let taskStyles = {
       iconColor: 'white'
     },
     'column-1': {
-      background: 'rgba(246, 108, 14, 0.06)',
-      border: '2px dashed #FFA550',
-      iconColor: '#FFA550' 
+        background: 'rgba(246, 108, 14, 0.06)',
+        border: '2px dashed #FFA550',
+
+        // Adding border source, slice, width and distance from the box
+        borderImage: "url('../imgs/Main_dashed.png') 10 / 5 / 0 round",
+        iconColor: '#FFA550',
     },
     'column-2': {
       background: 'rgba(25, 201, 41, 0.06)',

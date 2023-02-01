@@ -118,11 +118,12 @@ function App() {
                       {/* Passing column data through props */}
                       <DroppableColumn id={`${column.id}`} index={column.index} tasks={column.tasks} color={column.color} />
                     </div>
-                    
                   )
                 })
               }
           </DragDropContext>
+
+
         </main>
       </div>
     </div>
