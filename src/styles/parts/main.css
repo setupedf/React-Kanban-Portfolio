@@ -52,10 +52,8 @@
     /* grid-template-columns: 2fr 1fr; */
 }
 
-.App-main-column-body-item-column {
-    align-self: center;
-    justify-self: end;
-    height: 100%;
+.App-main-column-body-item-column:nth-child(2) {
+    justify-content: space-between;
 }
 
 .App-main-column-body-item-column:nth-child(1) {
@@ -91,7 +89,6 @@
 .App-main-column-body-item-column:nth-child(2) {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     font-weight: 400;
     font-size: 18px;
     line-height: 30px;
@@ -101,15 +98,15 @@
     word-break: break-word;
 }
 
-.App-main-column-body-item-column-employee.assign {
+.App-main-column-body-item-column-employee-text {
     font-size: 15px;
     line-height: 26px;
 }
 
-.App-main-column-body-item-column-employee.assign:hover {
+.assign-name:hover {
     text-decoration: underline;
 }
 
-.App-main-column-body-item-column-employee span {
+/* .App-main-column-body-item-column-employee-text span {
     margin-left: 5px;
-}
+} */

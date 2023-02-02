@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 
 // Importing packages
 import { Draggable } from 'react-beautiful-dnd';
 import styled from "styled-components";
+import Colleagues from "./Colleagues";
 
 let taskStyles = {
     'column-0': {
@@ -33,8 +34,10 @@ let colleagues = {
     'James': '🐴',
     'Emma': '🦄',
     'Robin': '🐥',
-    'Assignee': '▼'
-  }
+    'Assign': '▼',
+    'Ruslan': '😍 ',
+    names: ['Phil', 'Larry', 'James', 'Emma', 'Robin', 'Ruslan', 'Assign']
+}
 
 const Task = styled.div`
     padding: 24px 32px 24px 23px;
@@ -51,6 +54,7 @@ const Svg = styled.div`
 
 function DraggableItem(props) {
 
+    // Event handlers
     function getTaskStyle(columnId, snapshot) {
         if (!snapshot.draggingOver) {
             return taskStyles[columnId]
@@ -59,6 +63,25 @@ function DraggableItem(props) {
             return taskStyles[snapshot.draggingOver]
         }
     }
+
+    const clickHandler = (e) => {
+        setShow(!show)
+
+        // remove whitespaces
+        let name = e.target.innerText.trim()
+
+        if (name === 'Assign') {
+            props.task.colleague = null
+        } 
+        else {
+            props.task.colleague = name
+        }
+
+        console.log(props.task)
+    }
+
+    // Hooks
+    const [show, setShow] = useState(true)
     
     return (
 
@@ -102,25 +125,36 @@ function DraggableItem(props) {
 
                                             {
                                                 snapshot.draggingOver ?
-                                                <span className="App-main-column-body-item-column-state"> { props.columnData[snapshot.draggingOver].icon } <span> { props.columnData[snapshot.draggingOver].state } </span> </span> :
-                                                <span className="App-main-column-body-item-column-state"> { props.columnData[props.column.id].icon } <span> {props.columnData[props.column.id].state} </span> </span>
+                                                <span className="App-main-column-body-item-column-state-text"> { props.columnData[snapshot.draggingOver].icon } <span> { props.columnData[snapshot.draggingOver].state }</span></span> :
+                                                <span className="App-main-column-body-item-column-state-text"> { props.columnData[props.column.id].icon } <span> {props.columnData[props.column.id].state}</span></span>
                                             }
                                         </div>
+
                                         <span className="App-main-column-body-item-column-employee">
                                             {
                                                 props.task.colleague ?
-                                                <span className="App-main-column-body-item-column-employee"> {colleagues[props.task.colleague]} <span> { props.task.colleague } </span> </span> :
-                                                <span className="App-main-column-body-item-column-employee assign"> Assign <span> {colleagues['Assignee']} </span> </span>
+                                                <span onClick={clickHandler} className="App-main-column-body-item-column-employee-text assign">
+                                                    <span> {colleagues[props.task.colleague]} </span>
+
+                                                    <span className="assign-name"> { props.task.colleague } </span>
+                                                </span> :
+
+                                                <span onClick={clickHandler} className="App-main-column-body-item-column-employee-text assign">
+                                                    <span className="assign-name"> Assign </span>
+                                                    
+                                                    <span> { colleagues['Assign'] } </span>
+                                                </span>      
                                             }
                                         </span>
                                     </div>
                                 </li>
                             </Task>
+
+                            <Colleagues show={show} colleagues={colleagues} clickHandler={clickHandler}/>
                         </div>
                     )
                 }
             }
-
         </Draggable>
     )
 }
