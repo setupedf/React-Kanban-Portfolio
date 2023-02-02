@@ -16,46 +16,55 @@ let initData = [
   {
     id: 'column-0',
     index: 0,
-    icon: '🍅',
-    title: 'To do',
-    color: '#FFFFFF',
     tasks: [
       {
         id: 1,
         text: 'Design a mobile in-flight wifi experience.',
-        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow'
+        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow',
+        colleague: 'Phil'
       }
     ]
   },
   {
     id: 'column-1',
     index: 1,
-    icon: '🥕',
-    title: 'Doing',
-    color: '#FFA550',
     tasks: [
       {
         id: 2,
         text: 'Design a mobile in-flight wifi experience.',
-        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow'
+        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow',
+        colleague: null
       },
     ]
   },
   {
     id: 'column-2',
     index: 2,
-    icon: '✅',
-    title: 'Done',
-    color: '#19C929',
     tasks: [
       {
         id: 3,
         text: 'Design a mobile in-flight wifi experience.',
-        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow'
+        footer: 'Lorem ipsum dolor blabla let’s carpool toogethr tomorrow',
+        colleague: null
       },
     ],
   }
 ]
+
+let columnData = {
+  'column-0': {
+      icon: '🍅',
+      state: 'TBD'
+  },
+  'column-1': {
+      icon: '🥕',
+      state: 'Doing'
+  },
+  'column-2': {
+      icon: '✅',
+      state: 'Done'
+  }
+}
 
 let columnIndexes = {
   'column-0': 0,
@@ -143,12 +152,12 @@ function App() {
                   return(
                     <div className="App-main-column" key={column.index}>
                       <div className="App-main-column-title">
-                          <span className="App-main-column-title-icon">{column.icon}</span>
-                          {column.title}   
+                          <span className="App-main-column-title-icon">{columnData[column.id].icon}</span>
+                          {columnData[column.id].state}   
                       </div>
                       
                       {/* Passing column data through props */}
-                      <DroppableColumn id={`${column.id}`} index={column.index} tasks={column.tasks} color={column.color} />
+                      <DroppableColumn column={column} columnData={columnData}/>
                     </div>
                   )
                 })

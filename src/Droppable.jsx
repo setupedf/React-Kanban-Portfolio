@@ -10,17 +10,17 @@ import DraggableItem from "./Draggable";
 function DroppableColumn(props) {
     
     return (
-        <Droppable droppableId={`column-${props.index}`} > 
+        <Droppable droppableId={props.column.id} > 
             {
                 (provided) => {
-                    if (props.tasks) {
+                    if (props.column.tasks) {
 
                         return (
                             <ul className="App-main-column-body" ref={provided.innerRef} {...provided.droppableProps}>
                                 {   
-                                    props.tasks.map((task, index) => {
+                                    props.column.tasks.map((task, index) => {
                                         return (
-                                            <DraggableItem task={task} key={task.id} index={index} color={props.color} columnId={props.id} />
+                                            <DraggableItem task={task} column={props.column} columnData={props.columnData} index={index} key={task.id}/>
                                         )
                                     })
                                 }
