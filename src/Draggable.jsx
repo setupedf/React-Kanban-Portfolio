@@ -2,6 +2,7 @@ import React, {useState} from "react";
 
 // Importing packages
 import { Draggable } from 'react-beautiful-dnd';
+import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import Colleagues from "./Colleagues";
 
@@ -48,12 +49,11 @@ const Task = styled.div`
     // left: auto !important;
 `
 
-const Svg = styled.div`
-    fill: white;    
-`
-
 function DraggableItem(props) {
-
+    
+    // Hooks
+    const [showColleagues, setShowColleagues] = useState(false)
+    
     // Event handlers
     function getTaskStyle(columnId, snapshot) {
         if (!snapshot.draggingOver) {
@@ -64,8 +64,9 @@ function DraggableItem(props) {
         }
     }
 
-    const clickHandler = (e) => {
-        setShow(!show)
+    const colleagueHandler = (e) => {
+        
+        setShowColleagues(!showColleagues)
 
         // remove whitespaces
         let name = e.target.innerText.trim()
@@ -76,15 +77,10 @@ function DraggableItem(props) {
         else {
             props.task.colleague = name
         }
-
-        console.log(props.task)
     }
 
-    // Hooks
-    const [show, setShow] = useState(true)
     
     return (
-
         <Draggable draggableId={`draggable-${props.task.id}`} index={props.index}>
             {
                 (provided, snapshot) => {
@@ -101,7 +97,6 @@ function DraggableItem(props) {
                                     <div className="App-main-column-body-item-column">
                                         <div className="App-main-column-body-item-column-main"> 
                                             <div className="App-main-column-body-item-column-main-icon">
-                                                {/* <img className="App-main-column-body-item-column-main-icon-img" src="./imgs/Main_copy.svg" alt="copy_icon"/> */}
 
                                                 {/* Adding the svg */}
                                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,32 +120,48 @@ function DraggableItem(props) {
 
                                             {
                                                 snapshot.draggingOver ?
-                                                <span className="App-main-column-body-item-column-state-text"> { props.columnData[snapshot.draggingOver].icon } <span> { props.columnData[snapshot.draggingOver].state }</span></span> :
-                                                <span className="App-main-column-body-item-column-state-text"> { props.columnData[props.column.id].icon } <span> {props.columnData[props.column.id].state}</span></span>
+                                                <span className="App-main-column-body-item-column-state-text">
+                                                    { props.columnData[snapshot.draggingOver].icon }
+
+                                                    <span> { props.columnData[snapshot.draggingOver].state }</span>
+                                                </span> :
+                                                
+                                                <span className="App-main-column-body-item-column-state-text">
+                                                    { props.columnData[props.column.id].icon }
+                                                    
+                                                    <span> {props.columnData[props.column.id].state}</span>
+                                                </span>
                                             }
                                         </div>
 
                                         <span className="App-main-column-body-item-column-employee">
                                             {
                                                 props.task.colleague ?
-                                                <span onClick={clickHandler} className="App-main-column-body-item-column-employee-text assign">
-                                                    <span> {colleagues[props.task.colleague]} </span>
+                                                <span onClick={colleagueHandler} className="App-main-column-body-item-column-employee-text assign">
+                                                    <span className="assign-emoji"> {colleagues[props.task.colleague]} </span>
 
                                                     <span className="assign-name"> { props.task.colleague } </span>
                                                 </span> :
 
-                                                <span onClick={clickHandler} className="App-main-column-body-item-column-employee-text assign">
+                                                <span onClick={colleagueHandler} className="App-main-column-body-item-column-employee-text assign">
                                                     <span className="assign-name"> Assign </span>
                                                     
-                                                    <span> { colleagues['Assign'] } </span>
+                                                    <span className="assign-emoji"> { colleagues['Assign'] } </span>
                                                 </span>      
                                             }
                                         </span>
                                     </div>
                                 </li>
                             </Task>
-
-                            <Colleagues show={show} colleagues={colleagues} clickHandler={clickHandler}/>
+                            
+                            <CSSTransition
+                                in={showColleagues}
+                                timeout={500}
+                                classNames="colleagues"
+                                unmountOnExit
+                                >
+                                <Colleagues colleagues={colleagues} colleagueHandler={colleagueHandler}/>
+                            </CSSTransition>
                         </div>
                     )
                 }

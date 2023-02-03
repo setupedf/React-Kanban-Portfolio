@@ -2,6 +2,7 @@
 
 // Importing packages
 import { DragDropContext } from 'react-beautiful-dnd';
+import { Transition } from 'react-transition-group';
 import 'reset-css'
 
 // Importing styles
@@ -81,6 +82,8 @@ function App() {
   const [idCount, updateIdCount] = useState(initIdCount)
   const [text, updateText] = useState("")
   const [footer, updateFooter] = useState("")
+
+  const [loaderVisible, setLoaderVisible] = useState(false)
   
   function onDragEnd(info) {
     
@@ -175,6 +178,17 @@ function App() {
               <span className="App-footer-form-btn-emoji">👆</span>
             </button>
           </form>
+
+          {/* <div className="App-footer-form">
+            <input className='App-footer-form-input' type="text" />
+            <input className='App-footer-form-input' type="text" />
+
+            <button className="App-footer-form-btn" type="submit">
+              <span className="App-footer-form-btn-text">Add colleague</span>
+              <span className="App-footer-form-btn-emoji">➕</span>
+            </button>
+          </div> */}
+        
         </div>
       </div>
     </div>

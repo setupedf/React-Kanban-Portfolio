@@ -1,0 +1,46 @@
+.colleagues-enter {
+    opacity: 0;
+    height: 0px;
+    margin-top: 0px;
+    padding: 0px;
+    border-width: 0px;
+}
+
+.colleagues-enter-active {
+    opacity: 1;
+    height: 100px;
+    padding: 8px;
+    margin-top: 30px;
+    border-width: 1px;
+    transition: all 500ms;
+}
+
+.colleagues-enter-done {
+    height: 100px;
+    padding: 8px;
+    margin-top: 30px;
+    border-width: 1px;
+}
+
+.colleagues-exit {
+    height: 100px;
+    padding: 8px;
+    margin-top: 30px;
+    border-width: 1px;
+}
+
+.colleagues-exit-active {
+    opacity: 0;
+    height: 0px;
+    padding: 0px;
+    margin-top: 0px;
+    border-width: 0px;
+    transition: all 500ms;
+}
+
+.colleagues-exit-done {
+    opacity: 0;
+    height: 0px;
+    padding: 0px;
+    margin-top: 0px;
+}
