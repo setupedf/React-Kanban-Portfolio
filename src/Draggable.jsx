@@ -94,9 +94,9 @@ function DraggableItem(props) {
                             <Task style={getTaskStyle(props.column.id, snapshot)}>
                                 <li className="App-main-column-body-item" 
                                 >
-                                    <div className="App-main-column-body-item-column">
-                                        <div className="App-main-column-body-item-column-main"> 
-                                            <div className="App-main-column-body-item-column-main-icon">
+                                    <div className="App-main-column-body-item">
+                                        <div className="App-main-column-body-item-main"> 
+                                            <div className="App-main-column-body-item-main-icon">
 
                                                 {/* Adding the svg */}
                                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,51 +105,33 @@ function DraggableItem(props) {
                                                 </svg>
                                             </div>
 
-                                            <div className="App-main-column-body-item-column-main-text">
+                                            <div className="App-main-column-body-item-main-text">
                                                 {props.task.text}
                                             </div>
                                         </div> 
                                         
-                                        <div className="App-main-column-body-item-column-footer">
-                                            {props.task.footer}
+                                        <div className="App-main-column-body-item-footer">
+                                            <p className="App-main-column-body-item-footer-text">
+                                                {props.task.footer}
+                                            </p>
+
+                                            <div className="App-main-column-body-item-footer-employee">
+                                                {
+                                                    props.task.colleague ?
+                                                    <span onClick={colleagueHandler} className="App-main-body-item-footer-employee-text assign">
+                                                        <span className="assign-emoji"> {colleagues[props.task.colleague]} </span>
+
+                                                        <span className="assign-name"> { props.task.colleague } </span>
+                                                    </span> :
+
+                                                    <span onClick={colleagueHandler} className="App-main-column-body-item-footer-employee-text assign">
+                                                        <span className="assign-name"> Assign </span>
+                                                        
+                                                        <span className="assign-emoji"> { colleagues['Assign'] } </span>
+                                                    </span>      
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div className="App-main-column-body-item-column">
-                                        <div className="App-main-column-body-item-column-state">
-
-                                            {
-                                                snapshot.draggingOver ?
-                                                <span className="App-main-column-body-item-column-state-text">
-                                                    { props.columnData[snapshot.draggingOver].icon }
-
-                                                    <span> { props.columnData[snapshot.draggingOver].state }</span>
-                                                </span> :
-                                                
-                                                <span className="App-main-column-body-item-column-state-text">
-                                                    { props.columnData[props.column.id].icon }
-                                                    
-                                                    <span> {props.columnData[props.column.id].state}</span>
-                                                </span>
-                                            }
-                                        </div>
-
-                                        <span className="App-main-column-body-item-column-employee">
-                                            {
-                                                props.task.colleague ?
-                                                <span onClick={colleagueHandler} className="App-main-column-body-item-column-employee-text assign">
-                                                    <span className="assign-emoji"> {colleagues[props.task.colleague]} </span>
-
-                                                    <span className="assign-name"> { props.task.colleague } </span>
-                                                </span> :
-
-                                                <span onClick={colleagueHandler} className="App-main-column-body-item-column-employee-text assign">
-                                                    <span className="assign-name"> Assign </span>
-                                                    
-                                                    <span className="assign-emoji"> { colleagues['Assign'] } </span>
-                                                </span>      
-                                            }
-                                        </span>
                                     </div>
                                 </li>
                             </Task>

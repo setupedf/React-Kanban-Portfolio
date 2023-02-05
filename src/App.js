@@ -1,8 +1,6 @@
-
-
 // Importing packages
 import { DragDropContext } from 'react-beautiful-dnd';
-import { Transition } from 'react-transition-group';
+import { useState } from 'react';
 import 'reset-css'
 
 // Importing styles
@@ -10,10 +8,13 @@ import './styles/styles.css';
 
 // Importing components
 import DroppableColumn from './Droppable';
-import { useState } from 'react';
 
-// Droppable and draggable data
-let initData = [
+// Setting variables
+let emojisFiltered = false
+const categories = ['animals_and_nature']
+const initIdCount = 3
+
+const initData = [
   {
     id: 'column-0',
     index: 0,
@@ -73,45 +74,47 @@ let columnIndexes = {
   'column-2': 2
 }
 
-let initIdCount = 3 
+/** Returns a random element from an array and cut it off if needed */
+function getRandom(array, modify=false) {
+  const max = array.length - 1
+  const index = Math.floor(Math.random() * max)
 
-function App() {
+  if (!modify) {
+    return array[index]
+  }
+}
 
-  // Making the controlled items
+function App(props) {
+
   const [data, updateData] = useState(initData)
+  const [emojis, updateEmojis] = useState(props.emojis)
   const [idCount, updateIdCount] = useState(initIdCount)
-  const [text, updateText] = useState("")
   const [footer, updateFooter] = useState("")
-
-  const [loaderVisible, setLoaderVisible] = useState(false)
+  const [text, updateText] = useState("")
   
-  function onDragEnd(info) {
+  const onDragEnd = (e) => {
     
     // Copying the data array
-    let newData = Array.from(data)
+    let copy = Array.from(data)
+
+    if (!e.destination) {
+      return null
+    }
     
     // Getting the reordered task
-    let sourceColumn = newData[columnIndexes[info.source.droppableId]]
-    let targetColumn = newData[columnIndexes[info.destination.droppableId]]
+    let sourceColumn = copy[columnIndexes[e.source.droppableId]]
+    let targetColumn = copy[columnIndexes[e.destination.droppableId]]
     
-    const [reorderedTask] = sourceColumn.tasks.splice(info.source.index, 1)
+    const [reorderedTask] = sourceColumn.tasks.splice(e.source.index, 1)
     
     // Inserting the task
-    targetColumn.tasks.splice(info.destination.index, 0, reorderedTask)
+    targetColumn.tasks.splice(e.destination.index, 0, reorderedTask)
     
     // Updating the array
-    updateData(newData)
+    updateData(copy)
   }
   
-  const textHandler = (e) => {
-    updateText(e.target.value)
-  }
-  
-  const footerHandler = (e) => {
-    updateFooter(e.target.value)
-  }
-  
-  function onSubmit(e) {
+  const onSubmit = (e) => {
     
     // Prevent default behaviour - page reload
     e.preventDefault()
@@ -135,31 +138,40 @@ function App() {
     updateText("")
     updateFooter("")
   }
+
+  const textHandler = (e) => {
+    updateText(e.target.value)
+  }
+
+  const footerHandler = (e) => {
+    updateFooter(e.target.value)
+  }
   
+  // Filtering the emoji array
+  if (!emojisFiltered) {
+    const result = emojis.filter(obj => {return categories.includes(obj.category)})
+    updateEmojis(result)
+    emojisFiltered = true
+  }
+
   return (
-    <div className="App">
+    <div className="App"> 	
       <div className="container">
         <header className="App-header">
           <span className="App-header-title"><span className="App-hader-text">📝</span>Kanban Board</span>
         </header>
 
         <main className="App-main">
-
-          {/* Declaring Dnd-able part of the site and passing
-              a function required when a draging ends*/}
           <DragDropContext onDragEnd={onDragEnd}>
               {
-
-                // Mapping over all columns in the data list
                 data.map(column => {
                   return(
                     <div className="App-main-column" key={column.index}>
                       <div className="App-main-column-title">
                           <span className="App-main-column-title-icon">{columnData[column.id].icon}</span>
-                          {columnData[column.id].state}   
+                          {columnData[column.id].state} 
                       </div>
                       
-                      {/* Passing column data through props */}
                       <DroppableColumn column={column} columnData={columnData}/>
                     </div>
                   )
@@ -167,29 +179,23 @@ function App() {
               }
           </DragDropContext>
         </main>
-
-        <div className="App-footer">
-          <form onSubmit={onSubmit} action="" className="App-footer-form">
-            <input value={text} onChange={textHandler} className='App-footer-form-input' type="text" placeholder='Type task text' required/>
-            <input value={footer} onChange={footerHandler} className='App-footer-form-input' type="text" placeholder='Type task footer' required/>
-
-            <button className="App-footer-form-btn" type="submit">
-              <span className="App-footer-form-btn-text">Create new task</span>
-              <span className="App-footer-form-btn-emoji">👆</span>
-            </button>
-          </form>
-
-          {/* <div className="App-footer-form">
-            <input className='App-footer-form-input' type="text" />
-            <input className='App-footer-form-input' type="text" />
-
-            <button className="App-footer-form-btn" type="submit">
-              <span className="App-footer-form-btn-text">Add colleague</span>
-              <span className="App-footer-form-btn-emoji">➕</span>
-            </button>
-          </div> */}
         
+        <div className="App-footer">
+          <div className="App-footer-btns">
+
+            <button className="App-footer-btns-btn" type="button">
+              <span className="App-footer-btns-btn-text">Create new task</span>
+              <span className="App-footer-btns-btn-emoji">👆</span>
+            </button>
+            
+            <button className="App-footer-btns-btn" type="button">
+              <span className="App-footer-btns-btn-text">Add your team mates</span>
+              <span className="App-footer-btns-btn-emoji">➕</span>
+            </button>
+            
+          </div>
         </div>
+        
       </div>
     </div>
   );
