@@ -6,21 +6,32 @@ import { Droppable } from 'react-beautiful-dnd';
 // Importing components
 import DraggableItem from "./Draggable";
 
-
 function DroppableColumn(props) {
     
     return (
+
         <Droppable droppableId={props.column.id} > 
             {
                 (provided) => {
                     if (props.column.tasks) {
 
                         return (
-                            <ul className="App-main-column-body" ref={provided.innerRef} {...provided.droppableProps}>
+                            <ul 
+                                className="App-main-column-body"
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                
+                                >
                                 {   
                                     props.column.tasks.map((task, index) => {
                                         return (
-                                            <DraggableItem task={task} column={props.column} columnData={props.columnData} index={index} key={task.id}/>
+                                            <DraggableItem 
+                                                task={task} 
+                                                column={props.column} 
+                                                columnData={props.columnData} 
+                                                colleagues={props.colleagues}
+                                                index={index} 
+                                                key={task.id}/>
                                         )
                                     })
                                 }

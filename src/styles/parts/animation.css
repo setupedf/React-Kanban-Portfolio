@@ -44,3 +44,29 @@
     padding: 0px;
     margin-top: 0px;
 }
+
+.popup-enter {
+    opacity: 0;
+}
+
+.popup-enter-active {
+    opacity: 1;
+    transition: all 300ms;
+}
+
+.popup-enter-done {
+    opacity: 1;
+}
+
+.popup-exit {
+    opacity: 1;
+}
+
+.popup-exit-active {
+    opacity: 0;
+    /* transition: all 300ms; */
+}
+
+.popup-exit-done {
+    opacity: 0;
+}

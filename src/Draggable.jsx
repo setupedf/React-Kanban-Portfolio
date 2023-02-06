@@ -29,17 +29,6 @@ let taskStyles = {
     }
 }
 
-let colleagues = {
-    'Phil': '👽',
-    'Larry': '👾',
-    'James': '🐴',
-    'Emma': '🦄',
-    'Robin': '🐥',
-    'Assign': '▼',
-    'Ruslan': '😍 ',
-    names: ['Phil', 'Larry', 'James', 'Emma', 'Robin', 'Ruslan', 'Assign']
-}
-
 const Task = styled.div`
     padding: 24px 32px 24px 23px;
     border-radius: 8px;
@@ -119,7 +108,7 @@ function DraggableItem(props) {
                                                 {
                                                     props.task.colleague ?
                                                     <span onClick={colleagueHandler} className="App-main-body-item-footer-employee-text assign">
-                                                        <span className="assign-emoji"> {colleagues[props.task.colleague]} </span>
+                                                        <span className="assign-emoji"> { props.colleagues[props.task.colleague]} </span>
 
                                                         <span className="assign-name"> { props.task.colleague } </span>
                                                     </span> :
@@ -127,7 +116,7 @@ function DraggableItem(props) {
                                                     <span onClick={colleagueHandler} className="App-main-column-body-item-footer-employee-text assign">
                                                         <span className="assign-name"> Assign </span>
                                                         
-                                                        <span className="assign-emoji"> { colleagues['Assign'] } </span>
+                                                        <span className="assign-emoji"> { props.colleagues['Assign'] } </span>
                                                     </span>      
                                                 }
                                             </div>
@@ -142,7 +131,7 @@ function DraggableItem(props) {
                                 classNames="colleagues"
                                 unmountOnExit
                                 >
-                                <Colleagues colleagues={colleagues} colleagueHandler={colleagueHandler}/>
+                                <Colleagues colleagues={props.colleagues} colleagueHandler={colleagueHandler}/>
                             </CSSTransition>
                         </div>
                     )

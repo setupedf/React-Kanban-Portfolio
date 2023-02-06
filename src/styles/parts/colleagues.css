@@ -23,10 +23,21 @@
     overflow-y: scroll;
     padding: 8px 32px;
 }
+@media (max-width: 1080px) {
+    .window-list {
+        padding: 8px 8px;
+    }
+}
+@media (max-width: 900px) {
+    .window-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
 .window-list-item {
     font-size: 15px;
     line-height: 26px;
+    text-align: center;
 }
 
 .window-list-item-emoji {

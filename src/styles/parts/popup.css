@@ -1,0 +1,58 @@
+.App-popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #343434bd;
+    top: 0;
+    left: 0;
+}
+
+.App-popup-window {
+    border-radius: 15px;
+    background: #fefefe;
+    padding: 30px;
+    min-width: 350px;
+}
+
+.App-popup-window-form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    position: relative;
+}
+
+.App-popup-window-form-inputs input {
+    display: block;
+    margin: 15px 0;
+}
+
+.App-popup-window-form-error {
+    font-size: 12px;
+    color: red;
+    margin-bottom: 16px; 
+}
+.App-popup-window-form-button {
+    padding: 8px;
+}
+
+.App-popup-window-form-button:hover {
+    border-radius: 8px;
+    background: lightgray;
+}
+
+.App-popup-window-form-control {
+    position: absolute;
+    right: 0;
+    top: -15px;
+    padding: 5px;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.App-popup-window-form-control:hover {
+    background: lightgray;
+}
+
