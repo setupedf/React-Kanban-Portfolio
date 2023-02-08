@@ -10,7 +10,6 @@ import './styles/styles.css';
 // Importing components
 import DroppableColumn from './Droppable';
 import Inputs from './Inputs';
-import Colleagues from './Colleagues';
 
 // Setting variables
 let emojisFiltered = false
@@ -84,6 +83,10 @@ let colleagues = {
   'Emma': '🦄',
   'Assign': '▼',
   names: ['Assign', 'Phil', 'Larry', 'Emma']
+}
+
+let keyMap = {
+  esc: 'esc'
 }
 
 /** Returns a random element from an array and cut it off if needed */
@@ -205,6 +208,7 @@ function App(props) {
         break;
     }
   }
+
   
   // Filtering the emoji array
   if (!emojisFiltered) {
@@ -215,83 +219,82 @@ function App(props) {
 
   return (
     <div className="App"> 	
-      <div className="container">
-        <header className="App-header">
-          <span className="App-header-title"><span className="App-hader-text">📝</span>Kanban Board</span>
-        </header>
+          <div className="container">
+            <header className="App-header">
+              <span className="App-header-title"><span className="App-hader-text">📝</span>Kanban Board</span>
+            </header>
 
-        <main className="App-main">
-          <DragDropContext onDragEnd={onDragEnd}>
-              {
-                data.map(column => {
-                  return(
-                    <div className="App-main-column" key={column.index}>
-                      <div className="App-main-column-title">
-                          <span className="App-main-column-title-icon">{columnData[column.id].icon}</span>
-                          {columnData[column.id].state} 
-                      </div>
-                      
-                      <DroppableColumn column={column} columnData={columnData} colleagues={colleagues}/>
-                    </div>
-                  )
-                })
-              }
-          </DragDropContext>
-        </main>
-        
-        <div className="App-footer">
-          <div className="App-footer-btns">
-
-            <button className="App-footer-btns-btn"
-                    onClick={() => {setShowPopup(true); popupTarget = "card"}}
-                    type="button"
-                    >
-              <span className="App-footer-btns-btn-text">Create new task</span>
-              <span className="App-footer-btns-btn-emoji">👆</span>
-            </button>
+            <main className="App-main">
+              <DragDropContext onDragEnd={onDragEnd}>
+                  {
+                    data.map(column => {
+                      return(
+                        <div className="App-main-column" key={column.index}>
+                          <div className="App-main-column-title">
+                              <span className="App-main-column-title-icon">{columnData[column.id].icon}</span>
+                              {columnData[column.id].state} 
+                          </div>
+                          
+                          <DroppableColumn column={column} columnData={columnData} colleagues={colleagues}/>
+                        </div>
+                      )
+                    })
+                  }
+              </DragDropContext>
+            </main>
             
-            <button className="App-footer-btns-btn"
-                    onClick={() => {setShowPopup(true); popupTarget = "colleague"}}
-                    type="button"
-                    >
-              <span className="App-footer-btns-btn-text">Add your team mates</span>
-              <span className="App-footer-btns-btn-emoji">➕</span>
-            </button>
-            
-          </div>
-        </div>
-      </div>
-      
-      <CSSTransition
-        in={showPopup}
-        timeout={300}
-        classNames="popup"
-        unmountOnExit
-        >
-        
-        <div className="App-popup">
-          <div className="App-popup-window">
-              <form onSubmit={submitInput} className="App-popup-window-form">
-                <div 
-                  onClick={closePopup}
-                  className="App-popup-window-form-control"
-                  >
-                  <span>&#10006;</span>
-                </div>
-                
-                <Inputs 
-                  target={popupTarget}
-                  />
-                { colleagueError && <p className="App-popup-window-form-error">{colleagueError}</p> }
+            <div className="App-footer">
+              <div className="App-footer-btns">
 
-                <button className="App-popup-window-form-button">
-                  <span>Submit</span>
+                <button className="App-footer-btns-btn"
+                        onClick={() => {setShowPopup(true); popupTarget = "card"}}
+                        type="button"
+                        >
+                  <span className="App-footer-btns-btn-text">Create new task</span>
+                  <span className="App-footer-btns-btn-emoji">👆</span>
                 </button>
-              </form>
+                
+                <button className="App-footer-btns-btn"
+                        onClick={() => {setShowPopup(true); popupTarget = "colleague"}}
+                        type="button"
+                        >
+                  <span className="App-footer-btns-btn-text">Add your team mates</span>
+                  <span className="App-footer-btns-btn-emoji">➕</span>
+                </button>
+                
+              </div>
+            </div>
           </div>
-        </div>
-        
-      </CSSTransition>
+          
+          <CSSTransition
+            in={showPopup}
+            timeout={300}
+            classNames="popup"
+            unmountOnExit
+            >
+            
+            <div className="App-popup">
+              <div className="App-popup-window">
+                  <form onSubmit={submitInput} className="App-popup-window-form">
+                    <div 
+                      onClick={closePopup}
+                      className="App-popup-window-form-control"
+                      >
+                      <span>&#10006;</span>
+                    </div>
+                    
+                    <Inputs 
+                      target={popupTarget}
+                      />
+                    { colleagueError && <p className="App-popup-window-form-error">{colleagueError}</p> }
+
+                    <button className="App-popup-window-form-button">
+                      <span>Submit</span>
+                    </button>
+                  </form>
+              </div>
+            </div>    
+          </CSSTransition>
     </div>
   );
 }
