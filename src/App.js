@@ -1,7 +1,7 @@
 // Importing packages
 import { CSSTransition } from 'react-transition-group';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'reset-css'
 
 // Importing styles
@@ -85,10 +85,6 @@ let colleagues = {
   names: ['Assign', 'Phil', 'Larry', 'Emma']
 }
 
-let keyMap = {
-  esc: 'esc'
-}
-
 /** Returns a random element from an array and cut it off if needed */
 function getRandom(array, modify=false) {
   const max = array.length - 1
@@ -106,7 +102,18 @@ function App(props) {
   const [idCount, updateIdCount] = useState(initIdCount)
   const [showPopup, setShowPopup] = useState(false)
   const [colleagueError, setColleagueError] = useState("")
-  
+
+  // Use only when the first render
+  useEffect(() => {
+
+    // An exit from popup when Esc pressed
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        setShowPopup(false)
+      }
+    })
+  }, [])
+
   /** Reorders a card within the dnd context*/
   const onDragEnd = (e) => {
     
@@ -157,7 +164,7 @@ function App(props) {
     setShowPopup(false)
   }
 
-  /** */
+  /** Addes a new colleague with a random emoji included*/
   const addColleague = (e) => {
 
     // Prevent default behaviour - page reload
